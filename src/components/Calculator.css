@@ -1,3 +1,10 @@
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --accent-gradient: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  --success-gradient: linear-gradient(135deg, #4ecdc4, #44a08d);
+}
+
 .calculator-container {
   display: flex;
   justify-content: center;
@@ -37,8 +44,14 @@
   margin: 0;
 }
 
+.header-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .mode-toggle {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--secondary-gradient);
   color: white;
   border: none;
   padding: 8px 16px;
@@ -52,6 +65,34 @@
 .mode-toggle:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.theme-selector {
+  position: relative;
+}
+
+.theme-dropdown {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  outline: none;
+}
+
+.theme-dropdown:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
+}
+
+.theme-dropdown option {
+  background: #2c3e50;
+  color: white;
+  padding: 8px;
 }
 
 .display-container {
@@ -134,7 +175,7 @@
 }
 
 .scientific-btn {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  background: var(--accent-gradient);
   color: white;
   border: none;
   padding: 10px 8px;
@@ -188,7 +229,7 @@
 }
 
 .operator-btn {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--secondary-gradient);
   color: white;
   border: none;
   padding: 15px;
@@ -205,7 +246,7 @@
 }
 
 .equals-btn {
-  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+  background: var(--success-gradient);
   color: white;
   border: none;
   padding: 15px;
@@ -222,7 +263,7 @@
 }
 
 .clear-btn {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  background: var(--accent-gradient);
   color: white;
   border: none;
   padding: 15px;
@@ -266,6 +307,16 @@
     max-width: 100%;
   }
   
+  .calculator-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .header-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
   .calculator-header h1 {
     font-size: 1.2rem;
   }
@@ -290,6 +341,11 @@
   .memory-btn {
     padding: 6px;
     font-size: 0.7rem;
+  }
+  
+  .theme-dropdown {
+    font-size: 0.7rem;
+    padding: 6px 8px;
   }
 }
 
@@ -331,7 +387,8 @@
 }
 
 /* Focus styles for accessibility */
-button:focus {
+button:focus,
+select:focus {
   outline: 2px solid rgba(255, 255, 255, 0.5);
   outline-offset: 2px;
 }

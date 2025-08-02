@@ -9,6 +9,66 @@ const Calculator = () => {
   const [history, setHistory] = useState([]);
   const [isScientific, setIsScientific] = useState(false);
   const [memory, setMemory] = useState(0);
+  const [currentTheme, setCurrentTheme] = useState('purple');
+
+  const themes = {
+    purple: {
+      name: 'Purple',
+      primary: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      secondary: 'linear-gradient(135deg, #667eea, #764ba2)',
+      accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+      success: 'linear-gradient(135deg, #4ecdc4, #44a08d)'
+    },
+    ocean: {
+      name: 'Ocean',
+      primary: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      secondary: 'linear-gradient(135deg, #667eea, #764ba2)',
+      accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+      success: 'linear-gradient(135deg, #4ecdc4, #44a08d)'
+    },
+    sunset: {
+      name: 'Sunset',
+      primary: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)',
+      secondary: 'linear-gradient(135deg, #ff9a9e, #fecfef)',
+      accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+      success: 'linear-gradient(135deg, #4ecdc4, #44a08d)'
+    },
+    forest: {
+      name: 'Forest',
+      primary: 'linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%)',
+      secondary: 'linear-gradient(135deg, #56ab2f, #a8e6cf)',
+      accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+      success: 'linear-gradient(135deg, #4ecdc4, #44a08d)'
+    },
+    midnight: {
+      name: 'Midnight',
+      primary: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)',
+      secondary: 'linear-gradient(135deg, #2c3e50, #34495e)',
+      accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+      success: 'linear-gradient(135deg, #4ecdc4, #44a08d)'
+    },
+    coral: {
+      name: 'Coral',
+      primary: 'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fad0c4 100%)',
+      secondary: 'linear-gradient(135deg, #ff9a9e, #fad0c4)',
+      accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+      success: 'linear-gradient(135deg, #4ecdc4, #44a08d)'
+    },
+    aurora: {
+      name: 'Aurora',
+      primary: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+      secondary: 'linear-gradient(135deg, #a8edea, #fed6e3)',
+      accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+      success: 'linear-gradient(135deg, #4ecdc4, #44a08d)'
+    },
+    fire: {
+      name: 'Fire',
+      primary: 'linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%)',
+      secondary: 'linear-gradient(135deg, #ff416c, #ff4b2b)',
+      accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+      success: 'linear-gradient(135deg, #4ecdc4, #44a08d)'
+    }
+  };
 
   const clearAll = () => {
     setDisplay('0');
@@ -197,17 +257,44 @@ const Calculator = () => {
     };
   }, [display, waitingForOperand]);
 
+  const changeTheme = (themeName) => {
+    setCurrentTheme(themeName);
+    document.documentElement.style.setProperty('--primary-gradient', themes[themeName].primary);
+    document.documentElement.style.setProperty('--secondary-gradient', themes[themeName].secondary);
+    document.documentElement.style.setProperty('--accent-gradient', themes[themeName].accent);
+    document.documentElement.style.setProperty('--success-gradient', themes[themeName].success);
+  };
+
+  useEffect(() => {
+    changeTheme(currentTheme);
+  }, [currentTheme]);
+
   return (
     <div className="calculator-container">
       <div className="calculator">
         <div className="calculator-header">
           <h1>Super Calculator</h1>
-          <button 
-            className="mode-toggle"
-            onClick={() => setIsScientific(!isScientific)}
-          >
-            {isScientific ? 'Standard' : 'Scientific'}
-          </button>
+          <div className="header-controls">
+            <button 
+              className="mode-toggle"
+              onClick={() => setIsScientific(!isScientific)}
+            >
+              {isScientific ? 'Standard' : 'Scientific'}
+            </button>
+            <div className="theme-selector">
+              <select 
+                value={currentTheme} 
+                onChange={(e) => changeTheme(e.target.value)}
+                className="theme-dropdown"
+              >
+                {Object.keys(themes).map(theme => (
+                  <option key={theme} value={theme}>
+                    {themes[theme].name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="display-container">
