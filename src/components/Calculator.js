@@ -10,6 +10,7 @@ const Calculator = () => {
   const [isScientific, setIsScientific] = useState(false);
   const [memory, setMemory] = useState(0);
   const [currentTheme, setCurrentTheme] = useState('purple');
+  const [answerColor, setAnswerColor] = useState('normal');
 
   const themes = {
     purple: {
@@ -70,24 +71,54 @@ const Calculator = () => {
     }
   };
 
+  const getAnswerColor = (value) => {
+    const numValue = parseFloat(value);
+    
+    if (isNaN(numValue)) {
+      return 'error';
+    }
+    
+    if (numValue === 0) {
+      return 'zero';
+    } else if (numValue > 0) {
+      return 'positive';
+    } else if (numValue < 0) {
+      return 'negative';
+    } else if (numValue === Infinity || numValue === -Infinity) {
+      return 'infinity';
+    } else if (Math.abs(numValue) < 0.000001 && numValue !== 0) {
+      return 'small';
+    } else if (numValue > 1000000) {
+      return 'large';
+    } else if (Number.isInteger(numValue)) {
+      return 'integer';
+    } else {
+      return 'decimal';
+    }
+  };
+
   const clearAll = () => {
     setDisplay('0');
     setPreviousValue(null);
     setOperation(null);
     setWaitingForOperand(false);
+    setAnswerColor('normal');
   };
 
   const clearDisplay = () => {
     setDisplay('0');
     setWaitingForOperand(false);
+    setAnswerColor('normal');
   };
 
   const inputDigit = (digit) => {
     if (waitingForOperand) {
       setDisplay(String(digit));
       setWaitingForOperand(false);
+      setAnswerColor('normal');
     } else {
       setDisplay(display === '0' ? String(digit) : display + digit);
+      setAnswerColor('normal');
     }
   };
 
@@ -95,8 +126,10 @@ const Calculator = () => {
     if (waitingForOperand) {
       setDisplay('0.');
       setWaitingForOperand(false);
+      setAnswerColor('normal');
     } else if (display.indexOf('.') === -1) {
       setDisplay(display + '.');
+      setAnswerColor('normal');
     }
   };
 
@@ -111,6 +144,7 @@ const Calculator = () => {
       
       setDisplay(String(newValue));
       setPreviousValue(newValue);
+      setAnswerColor(getAnswerColor(newValue));
       addToHistory(`${currentValue} ${operation} ${inputValue} = ${newValue}`);
     }
 
@@ -180,6 +214,7 @@ const Calculator = () => {
     }
 
     setDisplay(String(result));
+    setAnswerColor(getAnswerColor(result));
     addToHistory(`${operation}(${inputValue}) = ${result}`);
     setWaitingForOperand(true);
   };
@@ -204,6 +239,7 @@ const Calculator = () => {
       case 'MR':
         setDisplay(String(memory));
         setWaitingForOperand(true);
+        setAnswerColor(getAnswerColor(memory));
         break;
       case 'M+':
         setMemory(memory + inputValue);
@@ -303,7 +339,7 @@ const Calculator = () => {
               <div key={index} className="history-item">{item}</div>
             ))}
           </div>
-          <div className="display">{display}</div>
+          <div className={`display answer-${answerColor}`}>{display}</div>
         </div>
 
         <div className="memory-row">

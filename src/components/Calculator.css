@@ -126,6 +126,116 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+/* Answer Color Classes */
+.answer-normal {
+  color: white;
+}
+
+.answer-positive {
+  color: #4ecdc4;
+  text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.answer-negative {
+  color: #ff6b6b;
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.answer-zero {
+  color: #f39c12;
+  text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.answer-integer {
+  color: #9b59b6;
+  text-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
+}
+
+.answer-decimal {
+  color: #3498db;
+  text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+.answer-large {
+  color: #e74c3c;
+  text-shadow: 0 0 15px rgba(231, 76, 60, 0.7);
+  animation: shake 0.5s ease-in-out;
+}
+
+.answer-small {
+  color: #95a5a6;
+  text-shadow: 0 0 5px rgba(149, 165, 166, 0.3);
+  font-size: 2rem;
+}
+
+.answer-infinity {
+  color: #e67e22;
+  text-shadow: 0 0 20px rgba(230, 126, 34, 0.8);
+  animation: infinity-glow 1s ease-in-out infinite alternate;
+}
+
+.answer-error {
+  color: #e74c3c;
+  text-shadow: 0 0 15px rgba(231, 76, 60, 0.8);
+  animation: error-shake 0.5s ease-in-out;
+}
+
+/* Animations */
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px currentColor;
+  }
+  to {
+    text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes infinity-glow {
+  from {
+    text-shadow: 0 0 20px rgba(230, 126, 34, 0.8);
+  }
+  to {
+    text-shadow: 0 0 30px rgba(230, 126, 34, 1), 0 0 40px rgba(230, 126, 34, 0.6);
+  }
+}
+
+@keyframes error-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
 }
 
 .memory-row {
